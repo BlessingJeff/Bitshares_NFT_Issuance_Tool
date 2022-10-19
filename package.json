@@ -1,0 +1,94 @@
+{
+  "name": "nft_tool",
+  "version": "1.0.1",
+  "author": "https://nftea.gallery <nftea.gallery@gmail.com>",
+  "description": "An NFT issuance tool for the Bitshares blockchain",
+  "homepage": "./",
+  "private": true,
+  "main": "./public/electron.js",
+  "scripts": {
+    "start": "vite --port=3000",
+    "build": "vite build",
+    "dev": "concurrently -k \"cross-env BROWSER=none npm start\"",
+    "electron": "electron .",
+    "electron:start": "concurrently -k \"cross-env BROWSER=none vite preview --port 3000\" \"wait-on http://localhost:3000 && electronmon .\"",
+    "test": "concurrently -k \"cross-env BROWSER=none vite build\" \"electron-builder -w -c.extraMetadata.main=dist/electron.js\"",
+    "electron:package:macos-latest": "yarn build && electron-builder -m -c.extraMetadata.main=dist/electron.js --publish never",
+    "electron:package:windows-latest": "yarn build && electron-builder -w -c.extraMetadata.main=dist/electron.js --publish never",
+    "electron:package:ubuntu-latest": "yarn build && electron-builder -l -c.extraMetadata.main=dist/electron.js --publish never"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grctest/nft_tool.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grctest/nft_tool/issues"
+  },
+  "build": {
+    "appId": "com.electron.nft_tool",
+    "productName": "Bitshares NFT issuance tool",
+    "artifactName": "nft_tool.${ext}",
+    "files": [
+      "dist/**/*",
+      "./src/index.html",
+      "./src/*.js",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "public"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "portable"
+    },
+    "linux": {
+      "target": "deb"
+    }
+  },
+  "dependencies": {
+    "@babel/core": "^7.18.10",
+    "@emotion/react": "^11.10.0",
+    "@mantine/core": "^5.2.3",
+    "@mantine/form": "^5.2.3",
+    "@mantine/hooks": "^5.2.3",
+    "@vitejs/plugin-react": "^2.0.1",
+    "assert": "^2.0.0",
+    "beet-js": "https://github.com/bitshares/beet-js#develop",
+    "bitsharesjs": "^6.0.0",
+    "bitsharesjs-ws": "^6.0.0",
+    "buffer": "^6.0.3",
+    "elcetron": "^0.0.1-security",
+    "events": "^3.3.0",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "simple-websocket": "^9.1.0",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.4",
+    "vite": "^3.0.9",
+    "zustand": "^4.1.1"
+  },
+  "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
+    "concurrently": "^7.3.0",
+    "cross-env": "^7.0.3",
+    "electron": "^20.3.2",
+    "electron-builder": "^23.3.3",
+    "electronmon": "^2.0.2",
+    "esbuild": "^0.15.5",
+    "vite-plugin-electron": "^0.9.1",
+    "wait-on": "^6.0.1"
+  },
+  "browserslist": {
+    "production": [
+      "last 1 electron version"
+    ],
+    "development": [
+      "last 1 electron version"
+    ]
+  }
+}
